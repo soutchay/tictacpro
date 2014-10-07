@@ -1,0 +1,157 @@
+<!Doctype html>
+<html>
+<head>
+        <title>Project 2 - Period 1</title>
+        <link type="text/css" rel="stylesheet" href="style.css" />
+<script>
+//window.onload means it will wait until the html is loaded to run initializeGame
+window.onload = function() {
+    initializeGame();
+};
+//this function will not load until initializGame is loaded through window.onload, this sets var currentCell to the id c0 then adds event listener make it clickable to change color to yellow
+var clickState = [0,0,0,0,0,0,0,0,0];
+function initializeGame(){
+    var count = 0;
+    //count is the number of turn
+    for(var cellId =0; cellId < 9; cellId ++) {
+
+        var currentCell = document.getElementById("c" + cellId);
+        //the id is c0,c1,c2, so c+cellId will get c"number" of the div
+        //selecting c0 by document getElementById
+        var clicked = currentCell.addEventListener("click", function() {
+            var cellNum = parseInt(this.id.substring(1,999));
+            count ++;
+            if (clickState[cellNum] != 0) {
+                return;
+            } 
+            if (count%2 ===0) {
+
+            this.style.backgroundColor = 'yellow'; 
+            clickState[cellNum] = 1;
+            }
+            else {this.style.backgroundColor = "purple";
+            clickState[cellNum] = 2;
+            }
+        });
+        currentCell.addEventListener("mouseover", function() {
+           var cellNum = parseInt(this.id.substring(1,999));
+           if (clickState[cellNum] === 0) {
+                this.style.backgroundColor = 'black';}})
+        currentCell.addEventListener("mouseout", function() {
+            var cellNum = parseInt(this.id.substring(1,999));
+            if (clickState[cellNum] === 0) {
+                this.style.backgroundColor = 'blue';}})
+//                };
+    }
+};
+        //"this" is equal to the default object of the entire thing
+        // currentCell.addEventListener("click", function(){
+        //     this.style.backgroundColor = ((count % 2) === 0) ? "green" : "purple";
+//         currentCell.addEventListener("mouseover", function() {
+//            var cellNum = parseInt(this.id.substring(1,999));
+//            if (clickState[cellNum] === 0) {
+//                 this.style.backgroundColor = 'black';
+//            }   
+//         currentCell.addEventListener("mouseout", function() {
+//             var cellNum = parseInt(this.id.substring(1,999));
+//             if (clickState[cellNum] === 0) {
+//                 this.style.backgroundColor = 'blue';
+//            }
+//         })
+
+
+//         });
+//     }
+// };
+        // currentCell.addEventListener("mouseout", function() {
+        //    var cellNum = parseInt(this.id.substring(1,999));
+        //    if (clickState[cellNum] === 0) {
+        //    this.style.backgroundColor = 'blue';
+        // // });
+//     }
+// };
+//     var red = document.getElementsByClassName("r");
+//     red.addEventListener("click", function() {
+//         this.style.backgroundColor = 'purple';
+//     });
+// }
+    //function allows for the click 
+</script>
+</head>
+<body>
+
+
+  <div class="container">
+
+        <div id="article" class="">
+          <!-- <p>Tic Tac Toe</p> -->s
+
+            <div id="c0" class="r float_left box"><p>0</p></div>
+
+            <div id="c1" class="g float_left box"><p>1</p></div>
+
+            <div id="c2" class="b float_left box"><p>2</p></div>
+
+            <div class="clearboth"></div>
+            <div id="c3" class="r float_left box"><p>3</p></div>
+            <div id="c4" class="g float_left box"><p>4</p></div>
+            <div id="c5" class="b float_left box"><p>5</p></div>
+
+            <div class="clearboth"></div>
+            <div id="c6" class="r float_left box"><p>6</p></div>         
+            <div id="c7" class="g float_left box"><p>7</p></div>
+            <div id="c8" class="b float_left box"><p>8</p></div>
+        </div>
+
+        <p id="demo"></p>
+
+<!--
+
+// function intiailizeGame(){
+//     var cell0 = document.getElementById("c0");
+//     //selecting c0 by document getElementById
+//     cell0.addEventListener("click", function() {
+//         cell10.style.backgroundColor = 'yellow'; 
+//     });
+//     //this allows for the click 
+
+
+
+
+
+
+//           document.getElementById('c1').addEventListener("click", function() {
+//                 document.getElementById('c1').style.backgroundColor = 'yellow'; 
+//             });
+// }
+
+
+// document.getElementById('c0').addEventListener("click", function() {
+//                 document.getElementById('c0').style.backgroundColor = 'yellow'; 
+//             });
+
+//           document.getElementById('c1').addEventListener("click", function() {
+//                 document.getElementById('c1').style.backgroundColor = 'yellow'; 
+//             });
+
+
+          
+//             document.addEventListener("mouseout", function() {
+//                 document.getElementById('c2').style.backgroundColor = 'yellow'; 
+//             });
+//             document.addEventListener("keydown", function() {
+//                 document.getElementById('c3').style.backgroundColor = 'yellow'; 
+//             });
+//             document.addEventListener("submit", function() {
+//                 document.getElementById('c4').style.backgroundColor = 'yellow'; 
+//             });
+-->
+
+
+    </div>
+
+
+
+
+</body>
+</html>
