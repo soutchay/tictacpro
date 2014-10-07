@@ -1,7 +1,7 @@
 <!Doctype html>
 <html>
 <head>
-        <title>Project 2 - Period 1</title>
+        <title>Tic Tac Toe</title>
         <link type="text/css" rel="stylesheet" href="style.css" />
 <script>
 //window.onload means it will wait until the html is loaded to run initializeGame
@@ -10,9 +10,10 @@ window.onload = function() {
 };
 //this function will not load until initializGame is loaded through window.onload, this sets var currentCell to the id c0 then adds event listener make it clickable to change color to yellow
 var clickState = [0,0,0,0,0,0,0,0,0];
+//create array in order to change the state of each cell
 function initializeGame(){
     var count = 0;
-    //count is the number of turn
+    //count is the number of turns
     for(var cellId =0; cellId < 9; cellId ++) {
 
         var currentCell = document.getElementById("c" + cellId);
@@ -20,29 +21,46 @@ function initializeGame(){
         //selecting c0 by document getElementById
         var clicked = currentCell.addEventListener("click", function() {
             var cellNum = parseInt(this.id.substring(1,999));
+        //parseInt will take the string number at index 1 of the currentCell and change it to an integer ie. "c0" will return the integer 0
+            for (count; count<9; count++) {
+                if (clickState[0]===1) {
+                    alert("clicked");
+                }
+            }
+
             count ++;
             if (clickState[cellNum] != 0) {
+                alert("that cell is take, foo!");
                 return;
-            } 
+            // this makes it so player 1 and player 2 cannot override each other's moves
+            } ;
             if (count%2 ===0) {
 
             this.style.backgroundColor = 'yellow'; 
-            clickState[cellNum] = 1;
-            }
-            else {this.style.backgroundColor = "purple";
             clickState[cellNum] = 2;
             }
+            else {this.style.backgroundColor = "purple";
+            clickState[cellNum] = 1;
+            }
+
         });
         currentCell.addEventListener("mouseover", function() {
            var cellNum = parseInt(this.id.substring(1,999));
            if (clickState[cellNum] === 0) {
                 this.style.backgroundColor = 'black';}})
+        //add event listener mouseover to currentCell to change the background color to black 
         currentCell.addEventListener("mouseout", function() {
             var cellNum = parseInt(this.id.substring(1,999));
             if (clickState[cellNum] === 0) {
                 this.style.backgroundColor = 'blue';}})
-//                };
+
+        //win logic below
+        //add event listener mouseout to currentCell to change background color to blue
     }
+        if (clickState[0] === 1) {
+            alert("blah");
+        }
+
 };
         //"this" is equal to the default object of the entire thing
         // currentCell.addEventListener("click", function(){
@@ -84,7 +102,7 @@ function initializeGame(){
   <div class="container">
 
         <div id="article" class="">
-          <!-- <p>Tic Tac Toe</p> -->s
+          <!-- <p>Tic Tac Toe</p> -->
 
             <div id="c0" class="r float_left box"><p>0</p></div>
 
@@ -151,6 +169,10 @@ function initializeGame(){
     </div>
 
 
+[2,0,0,2,0,0,2,0,0]
+[1,0,0,1,0,0,1,0,0]
+[2,0,0,0,2,0,0,0,2]
+[1,0,0,0,1,0,0,0,1]
 
 
 </body>
