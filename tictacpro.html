@@ -10,9 +10,13 @@ window.onload = function() {
 };
 //this function will not load until initializGame is loaded through window.onload, this sets var currentCell to the id c0 then adds event listener make it clickable to change color to yellow
 var clickState = [0,0,0,0,0,0,0,0,0];
+var playerTurn = 0;
+var playerOne = {};
+var playerTwo = {};
+//playerTurn to check who's turn it still is
 //create array in order to change the state of each cell
 function initializeGame(){
-    var count = 0;
+    //var count = 0;
     //count is the number of turns
     for(var cellId =0; cellId < 9; cellId ++) {
 
@@ -22,19 +26,20 @@ function initializeGame(){
         var clicked = currentCell.addEventListener("click", function() {
             var cellNum = parseInt(this.id.substring(1,999));
         //parseInt will take the string number at index 1 of the currentCell and change it to an integer ie. "c0" will return the integer 0
-            for (count; count<9; count++) {
-                if (clickState[0]===1) {
-                    alert("clicked");
-                }
-            }
 
-            count ++;
+
+            playerTurn ++;
             if (clickState[cellNum] != 0) {
-                alert("that cell is take, foo!");
-                return;
+                alert("that cell is taken, foo!");
+                if (playerTurn%2 ===0){
+                    return playerTurn = 1;
+                }
+                else {
+                    return playerTurn = 2;
+                };
             // this makes it so player 1 and player 2 cannot override each other's moves
             } ;
-            if (count%2 ===0) {
+            if (playerTurn%2 ===0) {
 
             this.style.backgroundColor = 'yellow'; 
             clickState[cellNum] = 2;
@@ -42,7 +47,12 @@ function initializeGame(){
             else {this.style.backgroundColor = "purple";
             clickState[cellNum] = 1;
             }
-
+            (function(instance){
+                if (playerTurn%2 === 0) {
+                    return alert(instance);
+}
+            })(cellNum)
+            //closure used to track the cell that was clicked
         });
         currentCell.addEventListener("mouseover", function() {
            var cellNum = parseInt(this.id.substring(1,999));
