@@ -76,13 +76,36 @@ function initializeGame(){
         });
         currentCell.addEventListener("mouseover", function() {
            var cellNum = parseInt(this.id.substring(1,999));
-           if (clickState[cellNum] === 0) {
-                this.style.backgroundColor = 'black';}})
+           var addClassArray = this.className.split(" ");
+           if (clickState[cellNum] === 0 && addClassArray[addClassArray.length-1] != "rotatebox") {
+                this.style.backgroundColor = 'black';
+                this.className = this.className + " rotatebox";
+        }
+           else if(addClassArray[addClassArray.length-1] === "rotatebox") {
+
+                //addClassArray.pop()
+                this.className = addClassArray.join(" ");
+                console.log(addClassArray);
+            }
+    })
         //add event listener mouseover to currentCell to change the background color to black 
         currentCell.addEventListener("mouseout", function() {
             var cellNum = parseInt(this.id.substring(1,999));
-            if (clickState[cellNum] === 0) {
-                this.style.backgroundColor = 'blue';}})
+             var addClassArray = this.className.split(" ");
+            if (clickState[cellNum] === 0 && addClassArray[addClassArray.length-1] != "rotatebox") {
+                // && addClassArray[addClassArray.length-1] != "rotatebox") {
+                // console.log(this.className.split(" ").pop.join(" "));
+                this.style.backgroundColor = 'blue';
+                this.className = this.className + " rotatebox";
+            }
+            else if (addClassArray[addClassArray.length-1] === "rotatebox"){
+
+                addClassArray.pop()
+                this.className = addClassArray.join(" ");
+                console.log(addClassArray);
+            }
+
+        })
 
         //win logic below
         //add event listener mouseout to currentCell to change background color to blue
@@ -126,7 +149,7 @@ function initializeGame(){
 <body ng-app="boxApp">
 
   <div class="container" ng-controller="BoxController">
-  <div class="title">TIC DAT HOE </div>
+  <div class="title">TIC DAT TOE </div>
         <div id="article" class="">
           <!-- <p>Tic Tac Toe</p> -->
 
