@@ -3,6 +3,9 @@
 <head>
         <title>Tic Tac Toe</title>
         <link type="text/css" rel="stylesheet" href="style.css" />
+        <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="main.js"></script>
 <script>
 //window.onload means it will wait until the html is loaded to run initializeGame
 window.onload = function() {
@@ -11,8 +14,6 @@ window.onload = function() {
 //this function will not load until initializGame is loaded through window.onload, this sets var currentCell to the id c0 then adds event listener make it clickable to change color to yellow
 var clickState = [0,0,0,0,0,0,0,0,0];
 var playerTurn = 0;
-var playerOne = {};
-var playerTwo = {};
 //playerTurn to check who's turn it still is
 //create array in order to change the state of each cell
 function initializeGame(){
@@ -30,27 +31,46 @@ function initializeGame(){
 
             playerTurn ++;
             if (clickState[cellNum] != 0) {
-                alert("that cell is taken, foo!");
-                if (playerTurn%2 ===0){
-                    return playerTurn = 1;
+                if (clickState === false) {
+                    alert("Game OVERRRRRR");
                 }
                 else {
-                    return playerTurn = 2;
-                };
+                    alert("that cell is taken, foo!");
+                    if (playerTurn%2 ===0){
+                        return playerTurn = 1;
+                    }
+                    else {
+                        return playerTurn = 2;
+                    };
+                }
             // this makes it so player 1 and player 2 cannot override each other's moves
             } ;
-            if (playerTurn%2 ===0) {
+            if (playerTurn%2 ===0 && clickState!= false) {
 
             this.style.backgroundColor = 'yellow'; 
             clickState[cellNum] = 2;
             }
-            else {this.style.backgroundColor = "purple";
+            else if (clickState!=false){this.style.backgroundColor = "purple";
             clickState[cellNum] = 1;
             }
             (function(instance){
+                if ((clickState[0] ===1 && clickState[1] ===1 && clickState[2] ===1) || 
+                    (clickState[3] ===1 && clickState[4] ===1 && clickState[5] ===1) || 
+                    (clickState[6] ===1 && clickState[7] ===1 && clickState[8] ===1) ||
+                    (clickState[0] ===1 && clickState[4] ===1 && clickState[8] ===1) ||
+                    (clickState[2] ===1 && clickState[4] ===1 && clickState[6] ===1) ||
+                    (clickState[0] ===1 && clickState[3] ===1 && clickState[8] ===1) ||
+                    (clickState[1] ===1 && clickState[4] ===1 && clickState[7] ===1) ||
+                    (clickState[2] ===1 && clickState[5] ===1 && clickState[8] ===1)  ) 
+                {
+                    alert("Player 1 Wins");
+                    clickState = false;
+                    playerTurn = false;
+                    //set clickState to false to end the game
+                };
                 if (playerTurn%2 === 0) {
-                    return alert(instance);
-}
+                   // return alert(instance);
+                }
             })(cellNum)
             //closure used to track the cell that was clicked
         });
@@ -67,9 +87,6 @@ function initializeGame(){
         //win logic below
         //add event listener mouseout to currentCell to change background color to blue
     }
-        if (clickState[0] === 1) {
-            alert("blah");
-        }
 
 };
         //"this" is equal to the default object of the entire thing
@@ -106,29 +123,49 @@ function initializeGame(){
     //function allows for the click 
 </script>
 </head>
-<body>
+<body ng-app="boxApp">
 
-
-  <div class="container">
-
+  <div class="container" ng-controller="BoxController">
+  <div class="title">TIC DAT HOE </div>
         <div id="article" class="">
           <!-- <p>Tic Tac Toe</p> -->
 
-            <div id="c0" class="r float_left box"><p>0</p></div>
+        </br>
+        </br>
+            <div id="c0" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>0</p></div>
 
-            <div id="c1" class="g float_left box"><p>1</p></div>
+            <div id="c1" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>1</p></div>
 
-            <div id="c2" class="b float_left box"><p>2</p></div>
-
+            <div id="c2" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>2</p></div>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
             <div class="clearboth"></div>
-            <div id="c3" class="r float_left box"><p>3</p></div>
-            <div id="c4" class="g float_left box"><p>4</p></div>
-            <div id="c5" class="b float_left box"><p>5</p></div>
-
+            <div id="c3" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>3</p></div>
+            <div id="c4" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>4</p></div>
+            <div id="c5" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>5</p></div>
             <div class="clearboth"></div>
-            <div id="c6" class="r float_left box"><p>6</p></div>         
-            <div id="c7" class="g float_left box"><p>7</p></div>
-            <div id="c8" class="b float_left box"><p>8</p></div>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+ 
+            <div id="c6" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>6</p></div>        
+            <div id="c7" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>7</p></div>
+            <div id="c8" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>8</p></div>
         </div>
 
         <p id="demo"></p>
@@ -179,10 +216,7 @@ function initializeGame(){
     </div>
 
 
-[2,0,0,2,0,0,2,0,0]
-[1,0,0,1,0,0,1,0,0]
-[2,0,0,0,2,0,0,0,2]
-[1,0,0,0,1,0,0,0,1]
+
 
 
 </body>
