@@ -1,15 +1,15 @@
 .container{
-  min-height: 100%;
   margin: 0; 
   border: 0;
+  height: 100%;
 }
 #article{
-	height:100px;
+	height:500px;
 	width:500px;
 	text-align: center;
   /*background-color:red;*/
 	border-radius: 10px;
-  margin: 0 auto; 
+ 	margin: 0 auto; 
 }
 .title {
 	padding-top: 2%;
@@ -27,6 +27,7 @@
 	-webkit-box-shadow: 10px 10px 5px #888;
 	box-shadow: 10px 10px 5px #888;
 	transition: 1s;
+
 }
 /*create animation to constantly rotate the box on hover,
 if hover is true then rotate constantly*/
@@ -36,6 +37,7 @@ if hover is true then rotate constantly*/
 	height: 175px;
 	transition: 1s;
 	z-index: 1;
+	background-color: blue;
 }
 .topleft {
 	position: fixed;
@@ -81,14 +83,17 @@ p {
 }*/
 /*the usual suspects end*/
 html {
-    height: 100%;
+
     }
 
 body {
-    height: 100%;
+
     }
 
 .title {
 	text-align: center;
+
+}
+.bottomrow {
 
 }

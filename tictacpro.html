@@ -4,7 +4,6 @@
         <title>Tic Tac Toe</title>
         <link type="text/css" rel="stylesheet" href="style.css" />
         <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
         <script src="main.js"></script>
 <script>
 //window.onload means it will wait until the html is loaded to run initializeGame
@@ -32,10 +31,10 @@ function initializeGame(){
             playerTurn ++;
             if (clickState[cellNum] != 0) {
                 if (clickState === false) {
-                    alert("Game OVERRRRRR");
+                    alert("GAME OVERRRRRR");
                 }
                 else {
-                    alert("that cell is taken, foo!");
+                    alert("Cell Already Taken");
                     if (playerTurn%2 ===0){
                         return playerTurn = 1;
                     }
@@ -49,9 +48,12 @@ function initializeGame(){
 
             this.style.backgroundColor = 'yellow'; 
             clickState[cellNum] = 2;
+            this.innerHTML="O";
             }
-            else if (clickState!=false){this.style.backgroundColor = "purple";
+            else if (clickState!=false){
+            this.style.backgroundColor = "purple";
             clickState[cellNum] = 1;
+            this.innerHTML="X";
             }
             (function(instance){
                 if ((clickState[0] ===1 && clickState[1] ===1 && clickState[2] ===1) || 
@@ -67,10 +69,22 @@ function initializeGame(){
                     clickState = false;
                     playerTurn = false;
                     //set clickState to false to end the game
-                };
-                if (playerTurn%2 === 0) {
-                   // return alert(instance);
                 }
+                else if ((clickState[0] ===2 && clickState[1] ===2 && clickState[2] ===2) || 
+                    (clickState[3] ===2 && clickState[4] ===2 && clickState[5] ===2) || 
+                    (clickState[6] ===2 && clickState[7] ===2 && clickState[8] ===2) ||
+                    (clickState[0] ===2 && clickState[4] ===2 && clickState[8] ===2) ||
+                    (clickState[2] ===2 && clickState[4] ===2 && clickState[6] ===2) ||
+                    (clickState[0] ===2 && clickState[3] ===2 && clickState[8] ===2) ||
+                    (clickState[1] ===2 && clickState[4] ===2 && clickState[7] ===2) ||
+                    (clickState[2] ===2 && clickState[5] ===2 && clickState[8] ===2)  ) 
+                {
+                    alert("Player 2 Wins");
+                    clickState = false;
+                    playerTurn = false;
+                    //set clickState to false to end the game
+                }                
+                else {return;};
             })(cellNum)
             //closure used to track the cell that was clicked
         });
@@ -80,14 +94,14 @@ function initializeGame(){
            if (clickState[cellNum] === 0 && addClassArray[addClassArray.length-1] != "rotatebox") {
                 this.style.backgroundColor = 'black';
                 this.className = this.className + " rotatebox";
-        }
+            }
            else if(addClassArray[addClassArray.length-1] === "rotatebox") {
 
                 //addClassArray.pop()
                 this.className = addClassArray.join(" ");
                 console.log(addClassArray);
             }
-    })
+        });
         //add event listener mouseover to currentCell to change the background color to black 
         currentCell.addEventListener("mouseout", function() {
             var cellNum = parseInt(this.id.substring(1,999));
@@ -95,55 +109,27 @@ function initializeGame(){
             if (clickState[cellNum] === 0 && addClassArray[addClassArray.length-1] != "rotatebox") {
                 // && addClassArray[addClassArray.length-1] != "rotatebox") {
                 // console.log(this.className.split(" ").pop.join(" "));
-                this.style.backgroundColor = 'blue';
+                console.log('something');
                 this.className = this.className + " rotatebox";
             }
-            else if (addClassArray[addClassArray.length-1] === "rotatebox"){
+            else if (addClassArray[addClassArray.length-1] === "rotatebox" ){
 
                 addClassArray.pop()
                 this.className = addClassArray.join(" ");
                 console.log(addClassArray);
-            }
-
-        })
+                if(playerTurn==0){
+                this.style.backgroundColor = 'blue';}
+            };
 
         //win logic below
         //add event listener mouseout to currentCell to change background color to blue
+        });
+
     }
 
 };
         //"this" is equal to the default object of the entire thing
-        // currentCell.addEventListener("click", function(){
-        //     this.style.backgroundColor = ((count % 2) === 0) ? "green" : "purple";
-//         currentCell.addEventListener("mouseover", function() {
-//            var cellNum = parseInt(this.id.substring(1,999));
-//            if (clickState[cellNum] === 0) {
-//                 this.style.backgroundColor = 'black';
-//            }   
-//         currentCell.addEventListener("mouseout", function() {
-//             var cellNum = parseInt(this.id.substring(1,999));
-//             if (clickState[cellNum] === 0) {
-//                 this.style.backgroundColor = 'blue';
-//            }
-//         })
-
-
-//         });
-//     }
-// };
-        // currentCell.addEventListener("mouseout", function() {
-        //    var cellNum = parseInt(this.id.substring(1,999));
-        //    if (clickState[cellNum] === 0) {
-        //    this.style.backgroundColor = 'blue';
-        // // });
-//     }
-// };
-//     var red = document.getElementsByClassName("r");
-//     red.addEventListener("click", function() {
-//         this.style.backgroundColor = 'purple';
-//     });
-// }
-    //function allows for the click 
+      
 </script>
 </head>
 <body ng-app="boxApp">
@@ -155,11 +141,11 @@ function initializeGame(){
 
         </br>
         </br>
-            <div id="c0" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>0</p></div>
+            <div id="c0" class="r float_left box"><p>0</p></div>
 
-            <div id="c1" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>1</p></div>
+            <div id="c1" class="g float_left box"><p>1</p></div>
 
-            <div id="c2" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>2</p></div>
+            <div id="c2" class="b float_left box"><p>2</p></div>
         </br>
         </br>
         </br>
@@ -171,9 +157,9 @@ function initializeGame(){
         </br>
         </br>
             <div class="clearboth"></div>
-            <div id="c3" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>3</p></div>
-            <div id="c4" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>4</p></div>
-            <div id="c5" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>5</p></div>
+            <div id="c3" class="r float_left box"><p>3</p></div>
+            <div id="c4" class="g float_left box"><p>4</p></div>
+            <div id="c5" class="b float_left box"><p>5</p></div>
             <div class="clearboth"></div>
         </br>
         </br>
@@ -186,56 +172,11 @@ function initializeGame(){
         </br>
         </br>
  
-            <div id="c6" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>6</p></div>        
-            <div id="c7" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>7</p></div>
-            <div id="c8" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>8</p></div>
+            <div id="c6" class="r float_left box bottomrow"><p>6</p></div>        
+            <div id="c7" class="g float_left box bottomrow"><p>7</p></div>
+            <div id="c8" class="b float_left box bottomrow"><p>8</p></div>
         </div>
-
-        <p id="demo"></p>
-
-<!--
-
-// function intiailizeGame(){
-//     var cell0 = document.getElementById("c0");
-//     //selecting c0 by document getElementById
-//     cell0.addEventListener("click", function() {
-//         cell10.style.backgroundColor = 'yellow'; 
-//     });
-//     //this allows for the click 
-
-
-
-
-
-
-//           document.getElementById('c1').addEventListener("click", function() {
-//                 document.getElementById('c1').style.backgroundColor = 'yellow'; 
-//             });
-// }
-
-
-// document.getElementById('c0').addEventListener("click", function() {
-//                 document.getElementById('c0').style.backgroundColor = 'yellow'; 
-//             });
-
-//           document.getElementById('c1').addEventListener("click", function() {
-//                 document.getElementById('c1').style.backgroundColor = 'yellow'; 
-//             });
-
-
-          
-//             document.addEventListener("mouseout", function() {
-//                 document.getElementById('c2').style.backgroundColor = 'yellow'; 
-//             });
-//             document.addEventListener("keydown", function() {
-//                 document.getElementById('c3').style.backgroundColor = 'yellow'; 
-//             });
-//             document.addEventListener("submit", function() {
-//                 document.getElementById('c4').style.backgroundColor = 'yellow'; 
-//             });
--->
-
-
+    
     </div>
 
 
