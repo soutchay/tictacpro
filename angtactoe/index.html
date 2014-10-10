@@ -12,7 +12,7 @@
 	<div class="toptitle">TIC TAC TOE</div>
 	<div x-ng-app="myApp">
 		<div x-ng-controller="BoxController" class="wrap">
-			<div class="box" ng-repeat="cell in boxArray" ng-click="cellOnClick()">
+			<div class="box" ng-repeat="cell in boxArray" ng-click="cellOnClick()" my-Rotate>
 			</div>
 		</div>
 		<div>
