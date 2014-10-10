@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> </title>
+		<link type="text/css" rel="stylesheet" href="normalize.css" />
+	    <link type="text/css" rel="stylesheet" href="style.css" />
+        <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="main.js"></script>
+</head>
+<body>
+	<div class="toptitle">TIC TAC TOE</div>
+	<div x-ng-app="myApp">
+		<div x-ng-controller="BoxController" class="wrap">
+			<div class="box" ng-repeat="cell in boxArray" ng-click="cellOnClick()">
+			</div>
+		</div>
+		<div>
+			asdflkjasdfjkl
+		</div>
+	</div>
+</body>
+</html>
