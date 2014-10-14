@@ -1,15 +1,18 @@
 .toptitle {
-	font-size: 50px;
+	font-size: 90px;
+	font-family: 'Monofett', cursive;
 	text-align: center;
 	position: relative;
 	margin-top: 5%;
 	margin-bottom: 2%;
+	margin-left: 4%;
 }
 
 .wrap {
 	margin-left: 30%;
 	margin-top: 0%;
 	width: 50%;
+	position: relative;
 }
 
 .box, .rotatebox{
@@ -18,11 +21,34 @@
 	border: 5px solid black;
 	background-color: blue;
 	margin: 0;
+	margin-left: 2%;
+	margin-bottom: 2%;
 	display: inline-block;
 	white-space: pre;
+	z-index: -1;
+	font-size: 70px;
+	text-align: center;
+	vertical-align:middle;
 }
 .rotatebox {
-	transform: rotate(360deg);
+	z-index: 1;
+	/*animation-direction: alternate;*/
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation: myfirst 2s infinite;  Chrome, Safari, Opera 
+    /*-webkit-animation-direction: alternate; */
+}
+@-webkit-keyframes myfirst {
+    1%   {background: blue, transform: rotate(180deg)}
+    25%  {background: rgb(184,0,0)  ;}
+    50%  {background: rgb(88,0,0)  ;}
+    75%  {background: rgb(184,0,0) ;}
+    100% {background: blue; transform: rotate(360deg)}
+}
+
+.letter {
+	
+	top: -125px;
+	position:relative;
 }
 
 .top 

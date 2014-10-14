@@ -12,12 +12,24 @@
 	<div class="toptitle">TIC TAC TOE</div>
 	<div x-ng-app="myApp">
 		<div x-ng-controller="BoxController" class="wrap">
-			<div class="box" ng-repeat="cell in boxArray" ng-click="cellOnClick()" my-Rotate>
+			<div class="box" ng-repeat="cell in boxArray" ng-click="cellOnClick()" x-my-Rotate mydata="cell" ng-class="{rotatebox: hover}" ng-mouseover="hover = true" ng-mouseout="hover = false"> 
+				<div class="letter" ng-bind="cell.placeholder"> </div>
 			</div>
+
 		</div>
-		<div>
-			asdflkjasdfjkl
-		</div>
+		<div class="bar" id="stats"></div> <div class="bar" id="rank"></div> <div class="bar" id="info"></div>
+		<div x-our-rating="1:2:3" x-rating-valuee="3"></div>
+			<select ng-model="rateme">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+						<!-- creates a dropdown menu -->
+			
+			<!-- "" is where the attributes go, this shows in console our-rate: 1:2:3-->
+			<!-- rating-valuee gets refered to in the main.js -->		
 	</div>
 </body>
 </html>
