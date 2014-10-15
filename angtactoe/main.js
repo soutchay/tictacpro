@@ -1,7 +1,3 @@
-// var restart = document.getElementById("restart");
-// restart.addEventListener("click", function(){
-// 	window.location.reload();
-// });
 // with angular we can do stuff that curl does
 // var myHttp;
 //declare variable myHttp
@@ -56,7 +52,7 @@ app.controller("BoxController", ["$scope","$http", function ($scope, $http){
 	console.log($scope.boxArray);
 	// $scope.scoreBoard = [{first: }, {second: }]
 	$scope.turn = 0;
-	$scope.gameOver = 0;
+	$scope.gameOver = false;
 	$scope.gameScore = [{score: 0}, {score: 0}];
 	//turn and gameOver defined for turns of the game and when the game is over respectively
 	$scope.cellOnClick = function () {
@@ -79,6 +75,7 @@ app.controller("BoxController", ["$scope","$http", function ($scope, $http){
 		//the above is to determine who's turn it is and what gets placed in the property player
 		// console.log(this.$index);
 		console.log(this.cell.player)
+		$scope.$apply()(function() {
 		if ($scope.boxArray[0].player == 1 && $scope.boxArray[1].player == 1 && $scope.boxArray[2].player == 1 ||
 			$scope.boxArray[3].player == 1 && $scope.boxArray[4].player == 1 && $scope.boxArray[5].player == 1 ||
 			$scope.boxArray[6].player == 1 && $scope.boxArray[7].player == 1 && $scope.boxArray[8].player == 1 ||
@@ -89,13 +86,13 @@ app.controller("BoxController", ["$scope","$http", function ($scope, $http){
 			$scope.boxArray[6].player == 1 && $scope.boxArray[4].player == 1 && $scope.boxArray[2].player == 1 )	
 		 {
 			alert("Player 1 Win");
-			$scope.gameOver = 1;
+			$scope.gameOver = true;
 			$scope.boxArray = angular.copy($scope.restartArray);
 			$scope.turn = 1;
 			//resets turn to 1, makes it so it is player 2's turn
 			console.log("turn is", $scope.turn);
 			$scope.gameScore[0].score ++;
-			console.log("player one won", $scope.gameScore[0].score);
+			console.log("player one won", $scope.gameScore[0].score, "time(s)!");
 		}
 		else if (
 			$scope.boxArray[0].player == 2 && $scope.boxArray[1].player == 2 && $scope.boxArray[2].player == 2 ||
@@ -108,21 +105,21 @@ app.controller("BoxController", ["$scope","$http", function ($scope, $http){
 			$scope.boxArray[6].player == 2 && $scope.boxArray[4].player == 2 && $scope.boxArray[2].player == 2 ) {
 			// $scope.apply();
 			alert("Player 2 Win");
-			$scope.gameOver = 1;
+			$scope.gameOver = true;
 			$scope.boxArray = angular.copy($scope.restartArray);
 			$scope.turn = 0;
 			//resets turn to 0, makes it so it is player 1's turn
 			console.log("turn is", $scope.turn);
 			$scope.gameScore[1].score ++;
-			console.log("player two won", $scope.gameScore[1].score);
+			returnconsole.log("player two won", $scope.gameScore[1].score, "time(s)!");
 		};
 		// conditions to win the game
 		console.log("it is turn " + $scope.turn);
-		if ($scope.turn == 9 && $scope.gameOver != 1) {
+		if ($scope.turn == 9 && $scope.gameOver == false) {
 			alert("Tie Game!");
-			return $scope.boxArray = angular.copy($scope.restartArray);
+			$scope.boxArray = angular.copy($scope.restartArray);
 		};
-
+});
 		// if ($scope.boxArray[4].player == 1 &&
 		// 	$scope.boxArray[0].player == 1 || $scope.boxArray[2].player == 1 || $scope.boxArray[6].player==1 || $scope.boxArray[8].player==1 ||
 		// 	$scope.boxArray[3].player ==1 || $scope.boxArray[1].player ==1 || $scope.boxArray[5].player ==1 || $scope.boxArray[3].player ==1 &&
