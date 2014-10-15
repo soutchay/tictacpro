@@ -1,0 +1,246 @@
+<!Doctype html>
+<html>
+<head>
+        <title>Tic Tac Toe</title>
+        <link type="text/css" rel="stylesheet" href="style.css" />
+        <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="main.js"></script>
+<script>
+//window.onload means it will wait until the html is loaded to run initializeGame
+window.onload = function() {
+    initializeGame();
+};
+//this function will not load until initializGame is loaded through window.onload, this sets var currentCell to the id c0 then adds event listener make it clickable to change color to yellow
+var clickState = [0,0,0,0,0,0,0,0,0];
+var playerTurn = 0;
+//playerTurn to check who's turn it still is
+//create array in order to change the state of each cell
+function initializeGame(){
+    //var count = 0;
+    //count is the number of turns
+    for(var cellId =0; cellId < 9; cellId ++) {
+
+        var currentCell = document.getElementById("c" + cellId);
+        //the id is c0,c1,c2, so c+cellId will get c"number" of the div
+        //selecting c0 by document getElementById
+        var clicked = currentCell.addEventListener("click", function() {
+            var cellNum = parseInt(this.id.substring(1,999));
+        //parseInt will take the string number at index 1 of the currentCell and change it to an integer ie. "c0" will return the integer 0
+
+
+            playerTurn ++;
+            if (clickState[cellNum] != 0) {
+                if (clickState === false) {
+                    alert("Game OVERRRRRR");
+                }
+                else {
+                    alert("that cell is taken, foo!");
+                    if (playerTurn%2 ===0){
+                        return playerTurn = 1;
+                    }
+                    else {
+                        return playerTurn = 2;
+                    };
+                }
+            // this makes it so player 1 and player 2 cannot override each other's moves
+            } ;
+            if (playerTurn%2 ===0 && clickState!= false) {
+
+            this.style.backgroundColor = 'yellow'; 
+            clickState[cellNum] = 2;
+            }
+            else if (clickState!=false){this.style.backgroundColor = "purple";
+            clickState[cellNum] = 1;
+            }
+            (function(instance){
+                if ((clickState[0] ===1 && clickState[1] ===1 && clickState[2] ===1) || 
+                    (clickState[3] ===1 && clickState[4] ===1 && clickState[5] ===1) || 
+                    (clickState[6] ===1 && clickState[7] ===1 && clickState[8] ===1) ||
+                    (clickState[0] ===1 && clickState[4] ===1 && clickState[8] ===1) ||
+                    (clickState[2] ===1 && clickState[4] ===1 && clickState[6] ===1) ||
+                    (clickState[0] ===1 && clickState[3] ===1 && clickState[8] ===1) ||
+                    (clickState[1] ===1 && clickState[4] ===1 && clickState[7] ===1) ||
+                    (clickState[2] ===1 && clickState[5] ===1 && clickState[8] ===1)  ) 
+                {
+                    alert("Player 1 Wins");
+                    clickState = false;
+                    playerTurn = false;
+                    //set clickState to false to end the game
+                };
+                if (playerTurn%2 === 0) {
+                   // return alert(instance);
+                }
+            })(cellNum)
+            //closure used to track the cell that was clicked
+        });
+        currentCell.addEventListener("mouseover", function() {
+           var cellNum = parseInt(this.id.substring(1,999));
+           var addClassArray = this.className.split(" ");
+           if (clickState[cellNum] === 0 ){
+            // && addClassArray[addClassArray.length-1] != "rotatebox") {
+                this.style.backgroundColor = 'black';
+                // this.className = this.className + " rotatebox";
+        }
+           // else {
+
+           //      addClassArray.pop()
+           //      this.className = addClassArray.join(" ");
+           //      console.log(addClassArray);
+           //  }
+    })
+        //add event listener mouseover to currentCell to change the background color to black 
+        currentCell.addEventListener("mouseout", function() {
+            var cellNum = parseInt(this.id.substring(1,999));
+            var addClassArray = this.className.split(" ");
+            if (clickState[cellNum] === 0 && addClassArray[addClassArray.length-1] != "rotatebox") {
+                // console.log(this.className.split(" ").pop.join(" "));
+                this.style.backgroundColor = 'blue';
+                // this.className = this.className + " rotatebox";
+            }
+            else {
+
+                addClassArray.pop()
+                this.className = addClassArray.join(" ");
+                console.log(addClassArray);
+            }
+
+        })
+
+        //win logic below
+        //add event listener mouseout to currentCell to change background color to blue
+    }
+
+};
+        //"this" is equal to the default object of the entire thing
+        // currentCell.addEventListener("click", function(){
+        //     this.style.backgroundColor = ((count % 2) === 0) ? "green" : "purple";
+//         currentCell.addEventListener("mouseover", function() {
+//            var cellNum = parseInt(this.id.substring(1,999));
+//            if (clickState[cellNum] === 0) {
+//                 this.style.backgroundColor = 'black';
+//            }   
+//         currentCell.addEventListener("mouseout", function() {
+//             var cellNum = parseInt(this.id.substring(1,999));
+//             if (clickState[cellNum] === 0) {
+//                 this.style.backgroundColor = 'blue';
+//            }
+//         })
+
+
+//         });
+//     }
+// };
+        // currentCell.addEventListener("mouseout", function() {
+        //    var cellNum = parseInt(this.id.substring(1,999));
+        //    if (clickState[cellNum] === 0) {
+        //    this.style.backgroundColor = 'blue';
+        // // });
+//     }
+// };
+//     var red = document.getElementsByClassName("r");
+//     red.addEventListener("click", function() {
+//         this.style.backgroundColor = 'purple';
+//     });
+// }
+    //function allows for the click 
+</script>
+</head>
+<body ng-app="boxApp">
+
+  <div class="container" ng-controller="BoxController">
+  <div class="title">TIC DAT HOE </div>
+        <div id="article" class="">
+          <!-- <p>Tic Tac Toe</p> -->
+
+        </br>
+        </br>
+            <div id="c0" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>0</p></div>
+
+            <div id="c1" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>1</p></div>
+
+            <div id="c2" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>2</p></div>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+            <div class="clearboth"></div>
+            <div id="c3" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>3</p></div>
+            <div id="c4" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>4</p></div>
+            <div id="c5" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>5</p></div>
+            <div class="clearboth"></div>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+ 
+            <div id="c6" class="r float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>6</p></div>        
+            <div id="c7" class="g float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>7</p></div>
+            <div id="c8" class="b float_left box" ng-class="spinning" ng-mouseover="spinaround()" ng-mouseleave="normalize()"><p>8</p></div>
+        </div>
+
+        <p id="demo"></p>
+
+<!--
+
+// function intiailizeGame(){
+//     var cell0 = document.getElementById("c0");
+//     //selecting c0 by document getElementById
+//     cell0.addEventListener("click", function() {
+//         cell10.style.backgroundColor = 'yellow'; 
+//     });
+//     //this allows for the click 
+
+
+
+
+
+
+//           document.getElementById('c1').addEventListener("click", function() {
+//                 document.getElementById('c1').style.backgroundColor = 'yellow'; 
+//             });
+// }
+
+
+// document.getElementById('c0').addEventListener("click", function() {
+//                 document.getElementById('c0').style.backgroundColor = 'yellow'; 
+//             });
+
+//           document.getElementById('c1').addEventListener("click", function() {
+//                 document.getElementById('c1').style.backgroundColor = 'yellow'; 
+//             });
+
+
+          
+//             document.addEventListener("mouseout", function() {
+//                 document.getElementById('c2').style.backgroundColor = 'yellow'; 
+//             });
+//             document.addEventListener("keydown", function() {
+//                 document.getElementById('c3').style.backgroundColor = 'yellow'; 
+//             });
+//             document.addEventListener("submit", function() {
+//                 document.getElementById('c4').style.backgroundColor = 'yellow'; 
+//             });
+-->
+
+
+    </div>
+
+
+
+
+
+</body>
+</html>

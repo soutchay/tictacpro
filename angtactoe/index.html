@@ -14,12 +14,12 @@
 		<div x-ng-controller="BoxController" class="wrap">
 			<div class="box" ng-repeat="cell in boxArray" ng-click="cellOnClick()" x-my-Rotate mydata="cell" ng-class="{rotatebox: hover}" ng-mouseover="hover = true" ng-mouseout="hover = false"> 
 				<div class="letter" ng-bind="cell.placeholder"> </div>
-			</div>
-
+			</div> </br>
+			<button id="restart" type="button" ng-click="restartGame()">Restart Game</button>
 		</div>
 		<div class="bar" id="stats"></div> <div class="bar" id="rank"></div> <div class="bar" id="info"></div>
-		<div x-our-rating="1:2:3" x-rating-valuee="3"></div>
-			<select ng-model="rateme">
+		<div x-our-rating="1:2:3" x-rating-valuee="10"></div>
+			<select>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>

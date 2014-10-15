@@ -1,3 +1,10 @@
+// var restart = document.getElementById("restart");
+// restart.addEventListener("click", function(){
+// 	window.location.reload();
+// });
+// with angular we can do stuff that curl does
+// var myHttp;
+//declare variable myHttp
 
 
 var app = angular.module("myApp", []);
@@ -12,14 +19,18 @@ app.directive('ourRating', function () {
                 '</ul>',
         //template is what gets put into the div
       scope: {
-      	ratingValue: '=ratingValuee'
+      	// ratingValue: '=ratingValuee'
+      	ratingValue: '=rateme'
       },      
+
       link: function (scope, elem, attrs) {
       	//scope, elem attached to, attrs are other parameters
         //console.log(scope, "Directive", elem, elem.scope(), "Attributes", attrs.ourRating.split(":"));
         //separate scope on every element, elem refers to the div, scope is elem.scope(), scope of THE DIV
         // comma can be used as a space and +
         console.log(scope.ratingValue);
+        rating = 5;
+        console.log(rating);
         //in scope, rating value is defined to equal itself in the html or whatever it is referencing to
         scope.stars = [];
         for (var i = 0; i < scope.ratingValue; i++) {
@@ -32,17 +43,21 @@ app.directive('ourRating', function () {
     //returning an object that contains a function
 });
 
-app.controller("BoxController", function ($scope){
+app.controller("BoxController", ["$scope","$http", function ($scope, $http){
 	// console.log('shit works');
-	// console.log($scope.rateme); 
+	// console.log($scope.rateme);
+	// myHttp = $http; 
 	$scope.boxArray = 
 	[{player: 0}, {player: 0}, {player: 0},
 	 {player: 0}, {player: 0}, {player: 0},
 	 {player: 0}, {player: 0}, {player: 0}];
+	$scope.restartArray = angular.copy($scope.boxArray);
 	//an array used to make the board
 	console.log($scope.boxArray);
+	// $scope.scoreBoard = [{first: }, {second: }]
 	$scope.turn = 0;
-	$scope.gameOver = false;
+	$scope.gameOver = 0;
+	$scope.gameScore = [{score: 0}, {score: 0}];
 	//turn and gameOver defined for turns of the game and when the game is over respectively
 	$scope.cellOnClick = function () {
 		// console.log("clicked " + this.$index);
@@ -50,14 +65,14 @@ app.controller("BoxController", function ($scope){
 		while (this.cell.player == 0) {
 			for (var i = 0; i <$scope.boxArray.length ; i++) {
 				if ($scope.turn % 2 != 0) {
+					$scope.boxArray[this.$index].placeholder = "X";
 					this.cell.player = 1;
 					console.log(this.cell.player + " this is what it is");
-					$scope.boxArray[this.$index].placeholder = "X";
 				}
 				else {
+					$scope.boxArray[this.$index].placeholder = "O";
 					this.cell.player = 2;
 					console.log(this.cell.player + " this is what it is");
-					$scope.boxArray[this.$index].placeholder = "O";
 				};
 			}
 		};
@@ -74,27 +89,38 @@ app.controller("BoxController", function ($scope){
 			$scope.boxArray[6].player == 1 && $scope.boxArray[4].player == 1 && $scope.boxArray[2].player == 1 )	
 		 {
 			alert("Player 1 Win");
-			$scope.gameOver = true;
-			$scope.boxArray = false;
+			$scope.gameOver = 1;
+			$scope.boxArray = angular.copy($scope.restartArray);
+			$scope.turn = 1;
+			//resets turn to 1, makes it so it is player 2's turn
+			console.log("turn is", $scope.turn);
+			$scope.gameScore[0].score ++;
+			console.log("player one won", $scope.gameScore[0].score);
 		}
 		else if (
 			$scope.boxArray[0].player == 2 && $scope.boxArray[1].player == 2 && $scope.boxArray[2].player == 2 ||
 			$scope.boxArray[3].player == 2 && $scope.boxArray[4].player == 2 && $scope.boxArray[5].player == 2 ||
 			$scope.boxArray[6].player == 2 && $scope.boxArray[7].player == 2 && $scope.boxArray[8].player == 2 ||
 			$scope.boxArray[0].player == 2 && $scope.boxArray[3].player == 2 && $scope.boxArray[6].player == 2 ||
-			$scope.boxArray[1].player == 2 && $scope.boxArray[4].player == 2 && $scope.boxArray[8].player == 2 ||
+			$scope.boxArray[1].player == 2 && $scope.boxArray[4].player == 2 && $scope.boxArray[7].player == 2 ||
 			$scope.boxArray[2].player == 2 && $scope.boxArray[5].player == 2 && $scope.boxArray[8].player == 2 ||
 			$scope.boxArray[0].player == 2 && $scope.boxArray[4].player == 2 && $scope.boxArray[8].player == 2 ||
 			$scope.boxArray[6].player == 2 && $scope.boxArray[4].player == 2 && $scope.boxArray[2].player == 2 ) {
+			// $scope.apply();
 			alert("Player 2 Win");
-			$scope.gameOver = true;
-			$scope.boxArray = false;
+			$scope.gameOver = 1;
+			$scope.boxArray = angular.copy($scope.restartArray);
+			$scope.turn = 0;
+			//resets turn to 0, makes it so it is player 1's turn
+			console.log("turn is", $scope.turn);
+			$scope.gameScore[1].score ++;
+			console.log("player two won", $scope.gameScore[1].score);
 		};
 		// conditions to win the game
 		console.log("it is turn " + $scope.turn);
-		if ($scope.turn == 9 && $scope.gameOver ==true) {
+		if ($scope.turn == 9 && $scope.gameOver != 1) {
 			alert("Tie Game!");
-			$scope.boxArray = false;
+			return $scope.boxArray = angular.copy($scope.restartArray);
 		};
 
 		// if ($scope.boxArray[4].player == 1 &&
@@ -136,7 +162,7 @@ app.controller("BoxController", function ($scope){
 // })
 // 	}
 
-});
+}]);
 //********
 // app.directive('myRotate', function(){
 // 	return {
@@ -196,3 +222,6 @@ app.controller("BoxController", function ($scope){
     //       element.removeClass('rotatebox');
     //     })
     // }
+// document.getElementById("restart").addEventListener("click", function(){
+// 	window.location.reload();
+// });
