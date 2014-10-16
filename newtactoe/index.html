@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> </title>
+		<link type="text/css" rel="stylesheet" href="normalize.css" />
+	    <link type="text/css" rel="stylesheet" href="style.css" />
+	    <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css" />
+        <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="main.js"></script>
+</head>
+<body>
+	<div class="toptitle">TIC TAC TOE</div>
+	<div x-ng-app="myApp">
+		<div x-ng-controller="BoxController" class="wrap">
+			<div class="box" ng-repeat="cell in boxArray" ng-click="cellOnClick()" x-my-Rotate mydata="cell" ng-class="{rotatebox: hover}" ng-mouseover="hover = true" ng-mouseout="hover = false"> 
+				<div class="letter" ng-bind="cell.placeholder"> </div>
+			</div> </br>
+			<button id="restart" type="button" ng-click="restartGame()">Restart Game</button>
+		</div>
+		<div class="bar" id="stats"></div> <div class="bar" id="rank"></div> <div class="bar" id="info"></div>
+		<div x-our-rating="1:2:3" x-rating-valuee="10"></div>
+			<select>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+						<!-- creates a dropdown menu -->
+			
+			<!-- "" is where the attributes go, this shows in console our-rate: 1:2:3-->
+			<!-- rating-valuee gets refered to in the main.js -->
+			<!-- <i class="fa fa-camera-retro fa-lg"></i> testing icon font		 -->
+	</div>
+</body>
+</html>
