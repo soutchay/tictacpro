@@ -9,11 +9,21 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 	// console.log('shit works');
 	// console.log($scope.rateme);
  	$scope.remoteGameContainer = $firebase(new Firebase("https://tactictoe.firebaseio.com/databaseGameContainer")) ;
-
-	var restartArray = 
-	[{player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
-	 {player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
-	 {player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""}];
+	// var restartArray = 
+	// [{player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
+	//  {player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
+	//  {player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""}];
+	$scope.restartArray = new Object;
+		$scope.restartArray["0"] = {player:"A", placeholder: " "};
+		$scope.restartArray["1"] = {player:"A", placeholder: " "};
+		$scope.restartArray["2"] = {player:"A", placeholder: " "};
+		$scope.restartArray["3"] = {player:"A", placeholder: " "};
+		$scope.restartArray["4"] = {player:"A", placeholder: " "};
+		$scope.restartArray["5"] = {player:"A", placeholder: " "};
+		$scope.restartArray["6"] = {player:"A", placeholder: " "};
+		$scope.restartArray["7"] = {player:"A", placeholder: " "};
+		$scope.restartArray["8"] = {player:"A", placeholder: " "};
+	console.log($scope.restartArray);
 	// $scope.boxArray = angular.copy($scope.restartArray);
 	// //an array used to make the board
 	// // console.log($scope.boxArray);
@@ -25,56 +35,78 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 	$scope.isXThenO = true;
 	//variable to switch between X and O	
 	$scope.turn = 0;
-	$scope.boxArray = angular.copy(restartArray);
 	$scope.gameOver = false;
-	var specialIsOff = true;
+	$scope.specialIsOff = true;
 
 	$scope.gameContainer = {
-	  cellListArray: $scope.boxArray,
+	  cellListArray: $scope.restartArray,
 	  clickCounter: $scope.turn,
 	  isGameOver: $scope.gameOver,
 	  isXFirst: $scope.isXThenO,
-	  totalScore: $scope.gameScore
+	  totalScore: $scope.gameScore,
+	  specialMoveOff: $scope.specialIsOff
 	} ;	
-	$scope.remoteGameContainer.$bind($scope, "gameContainer") ;
-	if (specialIsOff){	
-	$scope.cellOnClick = function (cellID) {
+	$scope.remoteGameContainer.$bind($scope, "gameContainer") ;	
 
+	$scope.cellOnClick = function (cellID) {
+		console.log("this is the ", cellID);
 		console.log("clicked " + cellID.player);
 		// console.log("this is", something);
 		// console.log("restart array is", restartArray);
 		if ($scope.gameContainer.isGameOver ==true) {
 			return;
 		}
-		if (cellID.player == 0 && $scope.gameContainer.isGameOver == false) {
-						// console.log("true or false"+$scope.gameContainer.clickCounter % 2 == 0);
-			if ($scope.gameContainer.clickCounter % 2 == 0) {
-				cellID.placeholder = $scope.gameContainer.isXFirst ? "X" : "O";
-				//selects the cell clicked on and puts an "X"
-				cellID.player = 1;
+		if ($scope.gameContainer.specialMoveOff){
+			if (cellID.player == "A" && $scope.gameContainer.isGameOver == false) {
+							// console.log("true or false"+$scope.gameContainer.clickCounter % 2 == 0);
+				if ($scope.gameContainer.clickCounter % 2 == 0) {
+					cellID.placeholder = $scope.gameContainer.isXFirst ? "X" : "O";
+					//selects the cell clicked on and puts an "X"
+					cellID.player = "X";
+				}
+				else {
+					cellID.placeholder = $scope.gameContainer.isXFirst ? "O" : "X";
+					//selects the cell clicked on and puts an "O"
+					cellID.player = "O";
+				}
+				$scope.gameContainer.clickCounter ++;
+				console.log(cellID.player + " this is what it is");
 			}
-			else {
-				cellID.placeholder = $scope.gameContainer.isXFirst ? "O" : "X";
-				//selects the cell clicked on and puts an "O"
-				cellID.player = 2;
-			}
-			$scope.gameContainer.clickCounter ++;
-			console.log(cellID.player + " this is what it is");
+			console.log("does this NOT WORK", $scope.gameContainer.specialMoveOff);
+			$scope.gameContainer.specialMove = 
+		}
+		else {
+			console.log("does this work", $scope.gameContainer.specialMoveOff);
+			if (cellID.player == "A" && $scope.gameContainer.isGameOver == false)
+				if ($scope.gameContainer.clickCounter % 2 == 0) {
+					//selects the cell clicked on and puts an "X"
+					cellID.placeholder = $scope.gameContainer.isXFirst ? "T" : "F";
+					cellID.player = "X";
+				}
+				else {
+					//selects the cell clicked on and puts an "O"
+					cellID.placeholder =  $scope.gameContainer.isXFirst ? "F" : "T";
+					cellID.player = "O";
+				}
+				$scope.gameContainer.clickCounter ++;
+				console.log($scope.gameContainer.specialMoveOff);	
+				return $scope.gameContainer.specialMoveOff = false;	
 		}		
 		//the above is to determine who's turn it is and what gets placed in the property player
 		// console.log(this.$index);
 		// console.log(this.cell.player)
 		
-		if ($scope.gameContainer.cellListArray[0].player == 1 && $scope.gameContainer.cellListArray[1].player == 1 && $scope.gameContainer.cellListArray[2].player == 1 ||
-			$scope.gameContainer.cellListArray[3].player == 1 && $scope.gameContainer.cellListArray[4].player == 1 && $scope.gameContainer.cellListArray[5].player == 1 ||
-			$scope.gameContainer.cellListArray[6].player == 1 && $scope.gameContainer.cellListArray[7].player == 1 && $scope.gameContainer.cellListArray[8].player == 1 ||
-			$scope.gameContainer.cellListArray[0].player == 1 && $scope.gameContainer.cellListArray[3].player == 1 && $scope.gameContainer.cellListArray[6].player == 1 ||
-			$scope.gameContainer.cellListArray[1].player == 1 && $scope.gameContainer.cellListArray[4].player == 1 && $scope.gameContainer.cellListArray[7].player == 1 ||
-			$scope.gameContainer.cellListArray[2].player == 1 && $scope.gameContainer.cellListArray[5].player == 1 && $scope.gameContainer.cellListArray[8].player == 1 ||
-			$scope.gameContainer.cellListArray[0].player == 1 && $scope.gameContainer.cellListArray[4].player == 1 && $scope.gameContainer.cellListArray[8].player == 1 ||
-			$scope.gameContainer.cellListArray[6].player == 1 && $scope.gameContainer.cellListArray[4].player == 1 && $scope.gameContainer.cellListArray[2].player == 1 )	
+		if ($scope.gameContainer.cellListArray["0"].player == "X" && $scope.gameContainer.cellListArray["1"].player == "X" && $scope.gameContainer.cellListArray["2"].player == "X" ||
+			$scope.gameContainer.cellListArray["3"].player == "X" && $scope.gameContainer.cellListArray["4"].player == "X" && $scope.gameContainer.cellListArray["5"].player == "X" ||
+			$scope.gameContainer.cellListArray["6"].player == "X" && $scope.gameContainer.cellListArray["7"].player == "X" && $scope.gameContainer.cellListArray["8"].player == "X" ||
+			$scope.gameContainer.cellListArray["0"].player == "X" && $scope.gameContainer.cellListArray["3"].player == "X" && $scope.gameContainer.cellListArray["6"].player == "X" ||
+			$scope.gameContainer.cellListArray["1"].player == "X" && $scope.gameContainer.cellListArray["4"].player == "X" && $scope.gameContainer.cellListArray["7"].player == "X" ||
+			$scope.gameContainer.cellListArray["2"].player == "X" && $scope.gameContainer.cellListArray["5"].player == "X" && $scope.gameContainer.cellListArray["8"].player == "X" ||
+			$scope.gameContainer.cellListArray["0"].player == "X" && $scope.gameContainer.cellListArray["4"].player == "X" && $scope.gameContainer.cellListArray["8"].player == "X" ||
+			$scope.gameContainer.cellListArray["6"].player == "X" && $scope.gameContainer.cellListArray["4"].player == "X" && $scope.gameContainer.cellListArray["2"].player == "X" )	
 		{	
 		 	alert("Player " + ($scope.gameContainer.isXFirst ? "X" : "O") + " Win");
+		 	console.log("someone won");
 			if 	($scope.gameContainer.isXFirst) {
 				$scope.gameContainer.totalScore.xScore ++;
 				$scope.gameContainer.isXFirst = false;
@@ -86,14 +118,14 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 			$scope.gameContainer.isGameOver = true;			 	
 		}
 		else if (
-			$scope.gameContainer.cellListArray[0].player == 2 && $scope.gameContainer.cellListArray[1].player == 2 && $scope.gameContainer.cellListArray[2].player == 2 ||
-			$scope.gameContainer.cellListArray[3].player == 2 && $scope.gameContainer.cellListArray[4].player == 2 && $scope.gameContainer.cellListArray[5].player == 2 ||
-			$scope.gameContainer.cellListArray[6].player == 2 && $scope.gameContainer.cellListArray[7].player == 2 && $scope.gameContainer.cellListArray[8].player == 2 ||
-			$scope.gameContainer.cellListArray[0].player == 2 && $scope.gameContainer.cellListArray[3].player == 2 && $scope.gameContainer.cellListArray[6].player == 2 ||
-			$scope.gameContainer.cellListArray[1].player == 2 && $scope.gameContainer.cellListArray[4].player == 2 && $scope.gameContainer.cellListArray[7].player == 2 ||
-			$scope.gameContainer.cellListArray[2].player == 2 && $scope.gameContainer.cellListArray[5].player == 2 && $scope.gameContainer.cellListArray[8].player == 2 ||
-			$scope.gameContainer.cellListArray[0].player == 2 && $scope.gameContainer.cellListArray[4].player == 2 && $scope.gameContainer.cellListArray[8].player == 2 ||
-			$scope.gameContainer.cellListArray[6].player == 2 && $scope.gameContainer.cellListArray[4].player == 2 && $scope.gameContainer.cellListArray[2].player == 2 ) 
+			$scope.gameContainer.cellListArray["0"].player == "O" && $scope.gameContainer.cellListArray["1"].player == "O" && $scope.gameContainer.cellListArray["2"].player == "O" ||
+			$scope.gameContainer.cellListArray["3"].player == "O" && $scope.gameContainer.cellListArray["4"].player == "O" && $scope.gameContainer.cellListArray["5"].player == "O" ||
+			$scope.gameContainer.cellListArray["6"].player == "O" && $scope.gameContainer.cellListArray["7"].player == "O" && $scope.gameContainer.cellListArray["8"].player == "O" ||
+			$scope.gameContainer.cellListArray["0"].player == "O" && $scope.gameContainer.cellListArray["3"].player == "O" && $scope.gameContainer.cellListArray["6"].player == "O" ||
+			$scope.gameContainer.cellListArray["1"].player == "O" && $scope.gameContainer.cellListArray["4"].player == "O" && $scope.gameContainer.cellListArray["7"].player == "O" ||
+			$scope.gameContainer.cellListArray["2"].player == "O" && $scope.gameContainer.cellListArray["5"].player == "O" && $scope.gameContainer.cellListArray["8"].player == "O" ||
+			$scope.gameContainer.cellListArray["0"].player == "O" && $scope.gameContainer.cellListArray["4"].player == "O" && $scope.gameContainer.cellListArray["8"].player == "O" ||
+			$scope.gameContainer.cellListArray["6"].player == "O" && $scope.gameContainer.cellListArray["4"].player == "O" && $scope.gameContainer.cellListArray["2"].player == "O" ) 
 		{
 			alert("Player " + (!$scope.gameContainer.isXFirst? "X" : "O") + " Win");
 			if 	(!$scope.gameContainer.isXFirst) {
@@ -118,32 +150,20 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 		//results in a tie at 9 turns and if the game is not over
 	// console.log($scope.gameScore);
 	};
-	}
+	
 	// RESET GAME
 	$scope.restartGame = function() {
-		$scope.gameContainer.cellListArray = 
-	[{player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
-	 {player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
-	 {player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""}];
+		$scope.gameContainer.cellListArray = $scope.restartArray;
 		$scope.gameContainer.isGameOver = false;
 		$scope.gameContainer.clickCounter = 0;
+		$scope.gameContainer.specialMoveOff = true;
 		console.log("reset game");
 		console.log($scope.gameContainer.cellListArray);
 	};
 	// $scope.restartGame();
-	$scope.special = function(cellID) {
-		if (cellID.player == 0 && $scope.gameContainer.isGameOver == false) {
-			if ($scope.gameContainer.clickCounter % 2 == 0){
-				//selects the cell clicked on and puts an "X"
-				cellID.player = 1;
-			}
-
-			else {
-				//selects the cell clicked on and puts an "O"
-				cellID.player = 2;
-			}
-		}
-		$scope.gameContainer.clickCounter ++;
+	$scope.special = function() {
+		console.log("works");
+		return $scope.gameContainer.specialMove = false;
 	}
 
 }]);

@@ -10,19 +10,19 @@
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
     <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
     <!-- App javascript -->
     <script src="main.js"></script>
 </head>
 <body>
 	<div class="toptitle">TIC TAC TOE</div>
 	<div x-ng-app="myApp">
-		<div x-ng-controller="BoxController" class="wrap">
+		<div x-ng-controller="BoxController" x-ng-model="gameContainer" class="wrap">
 			<div class="box" ng-repeat="cell in gameContainer.cellListArray" ng-click="cellOnClick(cell)" x-my-Rotate mydata="cell" ng-class="{rotatebox: hover}" ng-mouseover="hover = true" ng-mouseout="hover = false"> 
 				<div class="letter" ng-bind="cell.placeholder"> </div>
 			</div> </br>
-			<button id="restart" type="button" ng-click="restartGame()">Restart Game</button>
-			<button id="special" type="button" ng-click="special(cell)">Special Move</button>
+			<button class="restart" type="button" ng-click="restartGame()">Restart Game</button>
+			<button id="special" type="button" ng-click="special()">Special Move</button>
 			<div>asdfasdf</div>
 		</div>
 		<div class="bar" id="stats"></div> <div class="bar" id="rank"></div> <div class="bar" id="info"></div>
