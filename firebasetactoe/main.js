@@ -9,6 +9,7 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 	// console.log('shit works');
 	// console.log($scope.rateme);
  	$scope.remoteGameContainer = $firebase(new Firebase("https://tactictoe.firebaseio.com/databaseGameContainer")) ;
+ 	var something = new Firebase("https://tactictoe.firebaseio.com/databaseGameContainer");
 	// var restartArray = 
 	// [{player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
 	//  {player: 0, placeholder:""}, {player: 0, placeholder:""}, {player: 0, placeholder:""},
@@ -38,15 +39,27 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 	$scope.gameOver = false;
 	$scope.specialIsOff = true;
 
-	$scope.gameContainer = {
-	  cellListArray: $scope.restartArray,
-	  clickCounter: $scope.turn,
-	  isGameOver: $scope.gameOver,
-	  isXFirst: $scope.isXThenO,
-	  totalScore: $scope.gameScore,
-	  specialMoveOff: $scope.specialIsOff
-	} ;	
-	$scope.remoteGameContainer.$bind($scope, "gameContainer") ;	
+	something.once("value", function(data) {
+		if(data.val().totalNumPlayers == 2) {
+			$scope.currentPlayer = 0;
+		}
+		else {
+			$scope.currentPlayer = 1;
+		}
+		$scope.gameContainer = {
+		  cellListArray: $scope.restartArray,
+		  clickCounter: $scope.turn,
+		  isGameOver: $scope.gameOver,
+		  isXFirst: $scope.isXThenO,
+		  totalScore: $scope.gameScore,
+		  specialMoveOff: $scope.specialIsOff,
+		  totalNumPlayers: $scope.currentPlayer +1
+		} ;	
+		$scope.remoteGameContainer.$bind($scope, "gameContainer") ;
+
+		$scope.restartGame();
+	})	
+
 
 	$scope.cellOnClick = function (cellID) {
 		console.log("this is the ", cellID);
@@ -57,8 +70,8 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 			return;
 		}
 		if ($scope.gameContainer.specialMoveOff){
-			if (cellID.player == "A" && $scope.gameContainer.isGameOver == false) {
-							// console.log("true or false"+$scope.gameContainer.clickCounter % 2 == 0);
+			if (cellID.player == "A" && $scope.gameContainer.isGameOver == false && $scope.currentPlayer == ($scope.gameContainer.clickCounter % 2) ) {
+				// console.log("true or false"+$scope.gameContainer.clickCounter % 2 == 0);
 				if ($scope.gameContainer.clickCounter % 2 == 0) {
 					cellID.placeholder = $scope.gameContainer.isXFirst ? "X" : "O";
 					//selects the cell clicked on and puts an "X"
@@ -73,24 +86,23 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 				console.log(cellID.player + " this is what it is");
 			}
 			console.log("does this NOT WORK", $scope.gameContainer.specialMoveOff);
-			$scope.gameContainer.specialMove = 
 		}
 		else {
 			console.log("does this work", $scope.gameContainer.specialMoveOff);
 			if (cellID.player == "A" && $scope.gameContainer.isGameOver == false)
 				if ($scope.gameContainer.clickCounter % 2 == 0) {
 					//selects the cell clicked on and puts an "X"
-					cellID.placeholder = $scope.gameContainer.isXFirst ? "T" : "F";
+					cellID.placeholder = " ";
 					cellID.player = "X";
 				}
 				else {
 					//selects the cell clicked on and puts an "O"
-					cellID.placeholder =  $scope.gameContainer.isXFirst ? "F" : "T";
+					cellID.placeholder =  " ";
 					cellID.player = "O";
 				}
 				$scope.gameContainer.clickCounter ++;
 				console.log($scope.gameContainer.specialMoveOff);	
-				return $scope.gameContainer.specialMoveOff = false;	
+				$scope.gameContainer.specialMoveOff = true;	
 		}		
 		//the above is to determine who's turn it is and what gets placed in the property player
 		// console.log(this.$index);
@@ -163,7 +175,7 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 	// $scope.restartGame();
 	$scope.special = function() {
 		console.log("works");
-		return $scope.gameContainer.specialMove = false;
+		return $scope.gameContainer.specialMoveOff = false;
 	}
 
 }]);
