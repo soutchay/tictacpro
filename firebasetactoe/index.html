@@ -4,8 +4,7 @@
 	<title> </title>
 	<link type="text/css" rel="stylesheet" href="normalize.css" />
     <link type="text/css" rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css" />
-    <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script> 
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
@@ -15,7 +14,7 @@
     <script src="main.js"></script>
 </head>
 <body>
-	<div class="toptitle">TIC TAC TOE</div>
+	<div class="toptitle">TAC TIC TOE</div>
 	<div x-ng-app="myApp">
 		<div x-ng-controller="BoxController" x-ng-model="gameContainer" class="wrap">
 			<div class="box" ng-repeat="cell in gameContainer.cellListArray" ng-click="cellOnClick(cell)" x-my-Rotate mydata="cell" ng-class="{rotatebox: hover}" ng-mouseover="hover = true" ng-mouseout="hover = false"> 
@@ -23,23 +22,11 @@
 			</div> </br>
 			<button class="restart" type="button" ng-click="restartGame()">Restart Game</button>
 			<button id="special" type="button" ng-click="special()">Special Move</button>
-			<div>asdfasdf</div>
+			<div>X's Score: {{gameContainer.totalScore.xScore}}</div>
+			<div>Ties: {{gameContainer.totalScore.ties}}</div>
+			<div>O's Score: {{gameContainer.totalScore.xScore}}</div>
 		</div>
 		<div class="bar" id="stats"></div> <div class="bar" id="rank"></div> <div class="bar" id="info"></div>
-		<div class="win"></div>
-		<div x-our-rating="1:2:3" x-rating-valuee="10"></div>
-			<select>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-			</select>
-						<!-- creates a dropdown menu -->
-			
-			<!-- "" is where the attributes go, this shows in console our-rate: 1:2:3-->
-			<!-- rating-valuee gets refered to in the main.js -->
-			<!-- <i class="fa fa-camera-retro fa-lg"></i> testing icon font		 -->
 	</div>
 </body>
 </html>
