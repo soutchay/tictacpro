@@ -24,6 +24,9 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 	//turn and gameOver defined for turns of the game and when the game is over respectively
 	$scope.specialIsOff = true;
 	//specialIsOff variable for when a player can hide their move
+	$scope.winner = false;
+	$scope.winnerAnnouncement = "";
+	$scope.whosturn = "One";
 
 	firebasedata.once("value", function(data) {
 		if(data.val().totalNumPlayers == 2) {
@@ -40,7 +43,10 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 		  isXFirst: $scope.isXThenO,
 		  totalScore: $scope.gameScore,
 		  specialMoveOff: $scope.specialIsOff,
-		  totalNumPlayers: $scope.currentPlayer +1
+		  totalNumPlayers: $scope.currentPlayer +1,
+		  winnerAnnounce: $scope.winnerAnnouncement,
+		  determineWinner: $scope.winner,
+		  whichPlayer: $scope.whosturn
 		} ;	
 		//gameContainer is an object with properties that have the angular variables as their values in order to store data into firebase
 		$scope.remoteGameContainer.$bind($scope, "gameContainer") ;
@@ -60,11 +66,13 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 					cellID.placeholder = $scope.gameContainer.isXFirst ? "X" : "O";
 					//selects the cell clicked on and puts an "X"
 					cellID.player = "X";
+					$scope.gameContainer.whichPlayer = "Two";
 				}
 				else {
 					cellID.placeholder = $scope.gameContainer.isXFirst ? "O" : "X";
 					//selects the cell clicked on and puts an "O"
 					cellID.player = "O";
+					$scope.gameContainer.whichPlayer = "One"
 				}
 				$scope.gameContainer.clickCounter ++;
 			}
@@ -77,11 +85,13 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 					//selects the cell clicked on and puts an "X"
 					cellID.placeholder = " ";
 					cellID.player = "X";
+					$scope.gameContainer.whichPlayer = "Two";
 				}
 				else {
 					//selects the cell clicked on and puts an "O"
 					cellID.placeholder =  " ";
 					cellID.player = "O";
+					$scope.gameContainer.whichPlayer = "One";
 				}
 				$scope.gameContainer.clickCounter ++;	
 				$scope.gameContainer.specialMoveOff = true;	
@@ -98,8 +108,9 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 			$scope.gameContainer.cellListArray["0"].player == "X" && $scope.gameContainer.cellListArray["4"].player == "X" && $scope.gameContainer.cellListArray["8"].player == "X" ||
 			$scope.gameContainer.cellListArray["6"].player == "X" && $scope.gameContainer.cellListArray["4"].player == "X" && $scope.gameContainer.cellListArray["2"].player == "X" )	
 		{	
-		 	alert("Player " + ($scope.gameContainer.isXFirst ? "X" : "O") + " Win");
-		 	console.log("someone won");
+		 	$scope.gameContainer.winnerAnnounce = "X";
+		 	$scope.gameContainer.determineWinner = true;
+		 	$scope.gameContainer.winner
 			if 	($scope.gameContainer.isXFirst) {
 				$scope.gameContainer.totalScore.xScore ++;
 				$scope.gameContainer.isXFirst = false;
@@ -120,7 +131,8 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 			$scope.gameContainer.cellListArray["0"].player == "O" && $scope.gameContainer.cellListArray["4"].player == "O" && $scope.gameContainer.cellListArray["8"].player == "O" ||
 			$scope.gameContainer.cellListArray["6"].player == "O" && $scope.gameContainer.cellListArray["4"].player == "O" && $scope.gameContainer.cellListArray["2"].player == "O" ) 
 		{
-			alert("Player " + (!$scope.gameContainer.isXFirst? "X" : "O") + " Win");
+			$scope.gameContainer.winnerAnnounce = "O";
+			$scope.gameContainer.determineWinner = true;
 			if 	(!$scope.gameContainer.isXFirst) {
 				$scope.gameContainer.totalScore.xScore ++;
 				$scope.gameContainer.isXFirst = false;
@@ -148,10 +160,14 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 		$scope.gameContainer.isGameOver = false;
 		$scope.gameContainer.clickCounter = 0;
 		$scope.gameContainer.specialMoveOff = true;
+		$scope.gameContainer.determineWinner = false;
 	};
 	// Function to hide player's move
 	$scope.special = function() {
 		return $scope.gameContainer.specialMoveOff = false;
 	}
 
+	$scope.announce = function() {
+
+	}
 }]);
