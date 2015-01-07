@@ -1,12 +1,19 @@
-<!DOCTYPE html>
+'<!DOCTYPE html>
 <html>
 <head>
 	<title> </title>
-		<link type="text/css" rel="stylesheet" href="normalize.css" />
-	    <link type="text/css" rel="stylesheet" href="style.css" />
-        <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-        <script src="main.js"></script>
+	<link type="text/css" rel="stylesheet" href="normalize.css" />
+    <link type="text/css" rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="font-awesome-4.2.0/css/font-awesome.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=Monofett' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script> 
+	<!-- Firebase -->
+	<script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+	<!-- AngularFire -->
+	<script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js"></script>
+	<!--App  --> 
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script> -->
+    <script src="main.js"></script>
 </head>
 <body>
 	<div class="toptitle">TIC TAC TOE</div>
@@ -16,6 +23,7 @@
 				<div class="letter" ng-bind="cell.placeholder"> </div>
 			</div> </br>
 			<button id="restart" type="button" ng-click="restartGame()">Restart Game</button>
+			<div>asdfasdf</div>
 		</div>
 		<div class="bar" id="stats"></div> <div class="bar" id="rank"></div> <div class="bar" id="info"></div>
 		<div x-our-rating="1:2:3" x-rating-valuee="10"></div>
@@ -29,7 +37,8 @@
 						<!-- creates a dropdown menu -->
 			
 			<!-- "" is where the attributes go, this shows in console our-rate: 1:2:3-->
-			<!-- rating-valuee gets refered to in the main.js -->		
+			<!-- rating-valuee gets refered to in the main.js -->
+			<!-- <i class="fa fa-camera-retro fa-lg"></i> testing icon font		 -->
 	</div>
 </body>
 </html>

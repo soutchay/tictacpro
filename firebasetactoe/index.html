@@ -17,13 +17,13 @@
 	<div class="toptitle">TAC TIC TOE</div>
 	<div x-ng-app="myApp">
 		<div x-ng-controller="BoxController" x-ng-model="gameContainer" class="wrap">
-			<div class="announcement" ng-show="gameContainer.determineWinner" ng-hide="!gameContainer.determineWinner">Player {{gameContainer.winnerAnnounce}} Wins this Round</div>
+			<div class="announcement" ng-show="gameContainer.determineWinner" ng-hide="!gameContainer.determineWinner">{{gameContainer.winnerAnnounce}} Wins this Round</div>
 			<div class="announcement" ng-show="!gameContainer.determineWinner" ng-hide="gameContainer.determineWinner">Game is on. It is Player {{gameContainer.whichPlayer}}'s turn</div>
 			<div class="box" ng-repeat="cell in gameContainer.cellListArray" ng-click="cellOnClick(cell)" x-my-Rotate mydata="cell" ng-class="{rotatebox: hover}" ng-mouseover="hover = true" ng-mouseout="hover = false"> 
 				<div class="letter" ng-bind="cell.placeholder"> </div>
 			</div> </br>
 			<button class="restart" type="button" ng-click="restartGame()">Restart Game</button>
-			<button id="special" type="button" ng-click="special()">Special Move</button>
+			<button id="special" type="button" ng-click="special()">Hide your Move</button>
 			<div>X's Score: {{gameContainer.totalScore.xScore}}</div>
 			<div>Ties: {{gameContainer.totalScore.ties}}</div>
 			<div>O's Score: {{gameContainer.totalScore.xScore}}</div>

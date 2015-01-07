@@ -146,9 +146,10 @@ app.controller("BoxController", ["$scope", "$firebase", function ($scope, $fireb
 		else {
 			console.log("it is turn " + $scope.gameContainer.clickCounter);
 			if ($scope.gameContainer.clickCounter == 9 && $scope.gameContainer.isGameOver == false) {
-				alert("Tie Game!");
+				$scope.gameContainer.winnerAnnounce = "No one";
+				$scope.gameContainer.determineWinner = true;
 				$scope.gameContainer.isGameOver = true;			
-				$scope.gameContainer.totalScore.ties ++;			
+				$scope.gameContainer.totalScore.ties ++;		
 			}
 		}
 		//results in a tie at 9 turns and if the game is not over
